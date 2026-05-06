@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Playable Ad - Fixed Splash Girl_115</title>
+  <title>Playable Ad - Fixed UI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
     html, body {
@@ -29,7 +29,6 @@
       overflow: hidden;
     }
 
-    /* --- Загальні стилі шарів --- */
     .splash, .playable {
       position: absolute;
       inset: 0;
@@ -44,21 +43,16 @@
       z-index: 0;
     }
 
-    /* --- Splash Screen UI --- */
     .splash {
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      justify-content: space-between; 
       z-index: 100;
       transition: opacity 0.5s ease;
-      padding: 15% 0 20% 0; 
-      box-sizing: border-box;
     }
 
     .splash-bg { filter: blur(8px); transform: scale(1.1); }
 
-    
     .girl-splash-layer {
         position: absolute;
         inset: 0;
@@ -73,52 +67,58 @@
         height: 100%;
         object-fit: contain;
     }
-    /* ------------------------------------------ */
+
+    /* Контейнер UI */
+    .splash-ui {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 85%;
+      gap: 15px; 
+    }
 
     .logo {
-      position: relative;
-      width: 95%;   
-      height: 40%;  
+      width: 100%;   
+      aspect-ratio: 16/7; 
       background: url('assets/title.png') center/contain no-repeat;
-      z-index: 10;
-      margin-top: 220px;
-      margin-bottom: -60px; 
+      margin-top: 20px;
     }
 
     .start-btn { 
-      position: relative;
-      width: 100%;   
-      height: 40%;  
-      background: url('assets/start-btn.png') center/contain no-repeat; 
-      border: none; 
-      cursor: pointer;
-      z-index: 10; 
-      animation: pulseBtn 2s ease-in-out infinite; 
-      margin-bottom: 200px; 
-    }
+  position: relative;
+  width: 200%;     
+  max-width: 350px; 
+  aspect-ratio: 2/1; 
+  background: url('assets/start-btn.png') center/contain no-repeat; 
+  border: none; 
+  cursor: pointer;
+  animation: pulseBtn 2s ease-in-out infinite; 
+  outline: none;
+  transform-origin: center;
+}
 
-    /* Рука для головного екрану */
+   
     .hand {
       position: absolute;
-      top: 55%;     
-      left: 50%;
-      width: 100px;
-      height: 100px;
+      top: 50%;    
+      right: 15%;    /* З правого краю */
+      width: 90px;
+      height: 90px;
       background: url('assets/hand-cursor.png') center/contain no-repeat;
       animation: tapHand 2s ease-in-out infinite;
-      z-index: 11;
       pointer-events: none;
     }
 
     @keyframes pulseBtn {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08); }
+      50% { transform: scale(1.06); }
     }
 
-    
     @keyframes tapHand {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      40%, 60% { transform: translate(-10px, -20px) scale(0.9); }
+      0%, 100% { transform: translate(100, 100) scale(1); }
+      40%, 60% { transform: translate(-15px, -40px) scale(0.85); }
     }
 
     /* --- Character & Gameplay --- */
@@ -136,10 +136,7 @@
       object-fit: contain; 
       opacity: 0;
     }
-    .girl-container img.active {
-      opacity: 1;
-      
-    }
+    .girl-container img.active { opacity: 1; }
 
     @keyframes lively {
       0%, 100% { transform: scale(1); }
@@ -148,46 +145,22 @@
 
     .hitbox {
       position: absolute;
-      left: 0;
-      width: 100%;
       z-index: 50;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
     }
-    /* Хітбокси у відсотках для точності */
-    .hitbox.shirt { 
-      top: 30%;    
-      height: 35%; 
-      width: 75%;  
-      left: 10%;  
-      /*background: rgba(255, 0, 0, 0.3); */
-    }
 
-    .hitbox.pants { 
-      top: 65%;   
-      height: 35%; 
-      width: 80%;
-      left: 8%;
-      /*background: rgba(99, 112, 228, 0.3);*/ 
-    }
-    .contour {
-      pointer-events: none;
-      z-index: 40;
-    }
-
+    .hitbox.shirt { top: 30%; height: 35%; width: 75%; left: 10%; }
+    .hitbox.pants { top: 65%; height: 35%; width: 80%; left: 8%; }
+    
+    .contour { pointer-events: none; z-index: 40; }
     .blink { animation: blink 1.2s ease-in-out infinite; }
-    @keyframes blink {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 1; }
-    }
+    @keyframes blink { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
-    /* --- UI Elements --- */
     .music-btn {
       position: absolute;
-      top: 15px;   
-      right: 15px;
-      width: 45px;
-      height: 45px;
+      top: 15px; right: 15px;
+      width: 45px; height: 45px;
       border: none;
       background: rgba(0,0,0,0.5);
       color: #fff;
@@ -199,40 +172,29 @@
 
     .final-text {
       position: absolute;
-      top: 30%;
-      left: 60%;
+      top: 30%; left: 55%;
       transform: translateX(-50%);
-      width: 80%;
-      height: 15%;
+      width: 80%; height: 15%;
       background: url('assets/final-text.png') center/contain no-repeat;
       opacity: 0;
       z-index: 100;
-      pointer-events: none;
       transition: opacity 0.8s ease;
     }
     .final-text.active { opacity: 1; }
 
     .cta {
       position: absolute;
-      bottom: 40%;
-      left: 50%;
+      bottom: 30%; left: 50%;
       transform: translateX(-50%);
       display: none;
-      width: 80%;
-      height: 12%;
+      width: 80%; height: 12%;
       z-index: 100;
     }
     .cta button {
-      width: 150%;
-      height: 150%;
+      width: 120%; height: 120%;
       background: url('assets/play-btn.png') center/contain no-repeat;
-      border: none;
-      cursor: pointer;
-      animation: pulse 1.5s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+      border: none; cursor: pointer;
+      animation: pulseBtn 1.5s infinite;
     }
   </style>
 </head>
@@ -244,11 +206,15 @@
       
       <div class="girl-splash-layer">
           <img src="assets/girl_full.webp">
-          </div>
+      </div>
       
-      <div class="logo"></div>
-      <button class="start-btn"></button>
-      <div class="hand"></div>
+      <div class="splash-ui">
+        <div class="logo"></div>
+        <button class="start-btn">
+            <!-- Рука тепер частина кнопки -->
+            <div class="hand"></div>
+        </button>
+      </div>
     </div>
 
     <div class="playable" id="playable" style="display: none; opacity: 0;">
@@ -280,12 +246,7 @@
   <audio id="winSound" src="assets/win.mp3"></audio>
 
   <script>
-    const state = {
-      pantsRemoved: false,
-      shirtRemoved: false,
-      gameStarted: false
-    };
-
+    const state = { pantsRemoved: false, shirtRemoved: false, gameStarted: false };
     const elements = {
       splash: document.getElementById('splash'),
       playable: document.getElementById('playable'),
@@ -303,29 +264,24 @@
       musicToggle: document.getElementById('musicToggle')
     };
 
-    // Music Logic
     elements.musicToggle.addEventListener('click', (e) => {
       e.stopPropagation();
       elements.bgMusic.muted = !elements.bgMusic.muted;
       elements.musicToggle.textContent = elements.bgMusic.muted ? '🔇' : '🔊';
     });
 
-    elements.bgMusic.volume = 0.05;
-
-    // Start Game Function
     const startAction = () => {
       if (state.gameStarted) return;
       state.gameStarted = true;
-
       elements.splash.style.opacity = '0';
       setTimeout(() => {
         elements.splash.style.display = 'none';
         elements.playable.style.display = 'block';
         setTimeout(() => elements.playable.style.opacity = '1', 50);
       }, 500);
-      
       elements.bgMusic.muted = false;
-      elements.bgMusic.play().catch(() => console.log("Audio waiting for interaction"));
+      elements.bgMusic.play();
+      elements.bgMusic.volume = 0.02;
     };
 
     elements.splash.addEventListener('click', startAction);
@@ -346,16 +302,12 @@
       }
     }
 
-    function playRemoveSound() {
-      elements.removeSound.currentTime = 0;
-      elements.removeSound.play();
-    }
-
     document.getElementById('shirtHitbox').addEventListener('click', () => {
       if (state.shirtRemoved) return;
       state.shirtRemoved = true;
       elements.contourShirt.style.display = 'none';
-      playRemoveSound();
+      elements.removeSound.currentTime = 0;
+      elements.removeSound.play();
       updateVisuals();
     });
 
@@ -363,7 +315,8 @@
       if (state.pantsRemoved) return;
       state.pantsRemoved = true;
       elements.contourPants.style.display = 'none';
-      playRemoveSound();
+      elements.removeSound.currentTime = 0;
+      elements.removeSound.play();
       updateVisuals();
     });
 
@@ -374,9 +327,7 @@
       document.querySelectorAll('.hitbox').forEach(h => h.style.display = 'none');
     }
 
-    function goGame() { 
-      window.location.href = 'https://honeytoon.com/video-comic/teach-me-first?n=1'; 
-    }
+    function goGame() { window.location.href = 'https://honeytoon.com/video-comic/teach-me-first?n=1'; }
   </script>
 </body>
 </html>
